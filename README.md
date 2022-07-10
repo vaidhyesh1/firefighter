@@ -1,93 +1,169 @@
 ---
 page_type: sample
 languages:
-- javascript
-- html
+  - python
 products:
-- microsoft-identity-platform
-- azure-active-directory-v2
-- ms-graph
-description: "A simple JavaScript single-page application calling Microsoft Graph API using msal.js (w/ AAD v2 endpoint)"
-urlFragment: "active-directory-javascript-graphapi-v2"
+  - azure-active-directory
+description: 'This sample demonstrates a Python web application calling a Microsoft Graph that is secured using Azure Active Directory.'
+urlFragment: ms-identity-python-webapp
 ---
 
-# MSAL JavaScript Single-page Application using Implicit Flow
+# Integrating Microsoft Identity Platform with a Python web application
 
-A simple vanilla JavaScript single-page application which demonstrates how to configure [MSAL.JS Core](https://www.npmjs.com/package/msal) to login, logout, protect a route, and acquire an access token for a protected resource such as [Microsoft Graph API](https://docs.microsoft.com/en-us/graph/overview).
+## About this sample
 
-**Note:** A quickstart guide covering this sample can be found [here](https://docs.microsoft.com/azure/active-directory/develop/quickstart-v2-javascript).
+> This sample is also available as a quickstart for the Microsoft identity platform:
+> [Quickstart: Add sign-in with Microsoft to a Python web app]("https://docs.microsoft.com/azure/active-directory/develop/quickstart-v2-python-webapp")
 
-**Note:** A more detailed tutorial covering this sample can be found [here](https://docs.microsoft.com/azure/active-directory/develop/tutorial-v2-javascript-spa).
+### Overview
 
-> :information_source: This sample is using MSAL.js 1.x. See [this](https://github.com/Azure-Samples/ms-identity-javascript-v2) for a sample using MSAL.js 2.x with authorization code grant (w/ PKCE)
+This sample demonstrates a Python web application that signs-in users with the Microsoft identity platform and calls the Microsoft Graph.
 
-## Contents
+1. The python web application uses the Microsoft Authentication Library (MSAL) to obtain a JWT access token from the Microsoft identity platform (formerly Azure AD v2.0):
+2. The access token is used as a bearer token to authenticate the user when calling the Microsoft Graph.
 
-| File/folder       | Description                                |
-|-------------------|--------------------------------------------|
-| `AppCreationScripts` | Contains automation scripts for Powershell users (can be safely removed if desired). |
-| `JavaScriptSPA`   | Contains sample source files.              |
-| `authPopup.js`    | Main authentication logic resides here (using Popup flow). |
-| `authRedirect.js` | Use this instead of `authPopup.js` for authentication with redirect flow. |
-| `authConfig.js`   | Contains configuration parameters for the sample. |
-| `graph.js`        | Provides a helper function for calling MS Graph API. |
-| `graphConfig.js`  | Contains API endpoints for MS Graph.       |
-| `ui.js`           | Contains UI logic.                         |
-| `index.html`      |  Contains the UI of the sample.            |
-| `.gitignore`      | Defines what to ignore at commit time.     |
-| `CHANGELOG.md`    | List of changes to the sample.             |
-| `CODE_OF_CONDUCT.md` | Code of Conduct information.            |
-| `CONTRIBUTING.md` | Guidelines for contributing to the sample. |
-| `LICENSE`         | The license for the sample.                |
-| `package.json`    | Package manifest for npm.                  |
-| `README.md`       | This README file.                          |
-| `SECURITY.md`     | Security disclosures.                      |
-| `server.js`       | Implements a simple Node server to serve index.html.  |
+![Overview](./ReadmeFiles/topology.png)
 
-## Prerequisites
+### Scenario
 
-- [Node](https://nodejs.org/en/) must be installed to run this sample.
-- A modern web browser. This sample uses **ES6** conventions and will not run on **Internet Explorer**. See [here](https://github.com/AzureAD/microsoft-authentication-library-for-js/tree/dev/samples/msal-core-samples/VanillaJSTestApp/app/ie11-sample) for an IE11-compatibility.
+This sample shows how to build a Python web app using Flask and MSAL Python,
+that signs in a user, and get access to Microsoft Graph.
+For more information about how the protocols work in this scenario and other scenarios,
+see [Authentication Scenarios for Azure AD](https://docs.microsoft.com/en-us/azure/active-directory/develop/active-directory-authentication-scenarios).
 
-## Setup
+## How to run this sample
 
-1. [Register a new application](https://docs.microsoft.com/azure/active-directory/develop/scenario-spa-app-registration) in the [Azure Portal](https://portal.azure.com). Ensure that the application is enabled for the [implicit flow](https://docs.microsoft.com/azure/active-directory/develop/v2-oauth2-implicit-grant-flow).
-2. Open the [/JavaScriptSPA/authConfig.js](./JavaScriptSPA/authConfig.js) file and provide the required configuration values.
-3. On the command line, navigate to the root of the repository, and run `npm install` to install the project dependencies via npm.
+To run this sample, you'll need:
 
-## Running the sample
+> - [Python 2.7+](https://www.python.org/downloads/release/python-2713/) or [Python 3+](https://www.python.org/downloads/release/python-364/)
+> - An Azure Active Directory (Azure AD) tenant. For more information on how to get an Azure AD tenant, see [how to get an Azure AD tenant.](https://docs.microsoft.com/azure/active-directory/develop/quickstart-create-new-tenant)
 
-1. Configure authentication and authorization parameters:
-   1. Open `authConfig.js`
-   2. Replace the string `"Enter_the_Application_Id_Here"` with your app/client ID on AAD Portal.
-   3. Replace the string `"Enter_the_Cloud_Instance_Id_HereEnter_the_Tenant_Info_Here"` with `"https://login.microsoftonline.com/common/"` (*note*: This is for multi-tenant applications located on the global Azure cloud. For more information, see the [documentation](https://docs.microsoft.com/azure/active-directory/develop/quickstart-v2-javascript)).
-   4. Replace the string `"Enter_the_Redirect_Uri_Here"` with the redirect uri you setup on AAD Portal.
-2. Configure the parameters for calling MS Graph API:
-   1. Open `graphConfig.js`.
-   2. Replace the string `"Enter_the_Graph_Endpoint_Herev1.0/me"` with `"https://graph.microsoft.com/v1.0/me"`.
-   3. Replace the string `"Enter_the_Graph_Endpoint_Herev1.0/me/messages"` with `"https://graph.microsoft.com/v1.0/me/messages"`.
-3. To start the sample application, run `npm start`.
-4. Finally, open a browser to [http://localhost:3000](http://localhost:3000).
+### Step 1: Clone or download this repository
 
-> How did we do? Consider [sharing your experience with us](https://forms.office.com/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR73pcsbpbxNJuZCMKN0lURpUQktGUlJTSjdEWkYzWjRKTlRTUFNYUDlFViQlQCN0PWcu).
+From your shell or command line:
 
-## Key points
+```Shell
+git clone https://github.com/Azure-Samples/ms-identity-python-webapp.git
+```
 
-This sample demonstrates the following MSAL workflows:
+or download and extract the repository .zip file.
 
-* How to configure application parameters.
-* How to sign-in with popup and redirect methods.
-* How to sign-out.
-* How to get user consent incrementally.
-* How to acquire an access token.
-* How to make an API call with the access token.
+> Given that the name of the sample is quite long, you might want to clone it in a folder close to the root of your hard drive, to avoid file name length limitations when running on Windows.
+
+### Step 2: Register the sample application with your Azure Active Directory tenant
+
+There is one project in this sample. To register it, you can:
+
+- either follow the steps [Step 2: Register the sample with your Azure Active Directory tenant](#step-2-register-the-sample-with-your-azure-active-directory-tenant) and [Step 3: Configure the sample to use your Azure AD tenant](#choose-the-azure-ad-tenant-where-you-want-to-create-your-applications)
+- or use PowerShell scripts that:
+  - **automatically** creates the Azure AD applications and related objects (passwords, permissions, dependencies) for you
+  - modify the applications' configuration files.
+
+If you want to use this automation:
+
+1. On Windows, run PowerShell and navigate to the root of the cloned directory
+1. In PowerShell run:
+
+   ```PowerShell
+   Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process -Force
+   ```
+
+1. Run the script to create your Azure AD application and configure the code of the sample application accordingly.
+1. In PowerShell run:
+
+   ```PowerShell
+   cd .\AppCreationScripts\
+   .\Configure.ps1
+   cd ..
+   ```
+
+   > Other ways of running the scripts are described in [App Creation Scripts](./AppCreationScripts/AppCreationScripts.md)
+
+If you don't want to use this automation, follow the steps below.
+
+#### Choose the Azure AD tenant where you want to create your applications
+
+As a first step you'll need to:
+
+1. Sign in to the [Azure portal](https://portal.azure.com) using either a work or school account or a personal Microsoft account.
+1. If your account is present in more than one Azure AD tenant, select your profile at the top right corner in the menu on top of the page, and then **switch directory**.
+   Change your portal session to the desired Azure AD tenant.
+
+#### Register the Python Webapp (python-webapp)
+
+1. Navigate to the Microsoft identity platform for developers [App registrations](https://go.microsoft.com/fwlink/?linkid=2083908) page.
+1. Select **New registration**.
+1. When the **Register an application page** appears, enter your application's registration information:
+   - In the **Name** section, enter a meaningful application name that will be displayed to users of the app, for example `python-webapp`.
+   - Change **Supported account types** to **Accounts in any organizational directory and personal Microsoft accounts (e.g. Skype, Xbox, Outlook.com)**.
+   - In the Redirect URI (optional) section, select **Web** in the combo-box and enter the following redirect URIs: `http://localhost:5000/getAToken`.
+1. Select **Register** to create the application.
+1. On the app **Overview** page, find the **Application (client) ID** value and record it for later. You'll need it to configure the Visual Studio configuration file for this project.
+1. Select **Save**.
+1. From the **Certificates & secrets** page, in the **Client secrets** section, choose **New client secret**:
+
+   - Type a key description (of instance `app secret`),
+   - Select a key duration of either **In 1 year**, **In 2 years**, or **Never Expires**.
+   - When you press the **Add** button, the key value will be displayed, copy, and save the value in a safe location.
+   - You'll need this key later to configure the project in Visual Studio. This key value will not be displayed again, nor retrievable by any other means,
+     so record it as soon as it is visible from the Azure portal.
+
+1. Select the **API permissions** section
+   - Click the **Add a permission** button and then,
+   - Ensure that the **Microsoft APIs** tab is selected
+   - In the _Commonly used Microsoft APIs_ section, click on **Microsoft Graph**
+   - In the **Delegated permissions** section, ensure that the right permissions are checked: **User.ReadBasic.All**. Use the search box if necessary.
+   - Select the **Add permissions** button
+
+### Step 3: Configure the sample to use your Azure AD tenant
+
+In the steps below, "ClientID" is the same as "Application ID" or "AppId".
+
+#### Configure the pythonwebapp project
+
+> Note: if you used the setup scripts, the changes below may have been applied for you
+
+1. Open the `app_config.py` file
+1. Find the app key `Enter_the_Tenant_Name_Here` and replace the existing value with your Azure AD tenant name.
+1. You saved your application secret during the creation of the `python-webapp` app in the Azure portal.
+   Now you can set the secret in environment variable `CLIENT_SECRET`,
+   and then adjust `app_config.py` to pick it up.
+1. Find the app key `Enter_the_Application_Id_here` and replace the existing value with the application ID (clientId) of the `python-webapp` application copied from the Azure portal.
+
+### Step 4: Run the sample
+
+- You will need to install dependencies using pip as follows:
+
+```Shell
+$ pip install -r requirements.txt
+```
+
+Run app.py from shell or command line. Note that the host and port values need to match what you've set up in your redirect_uri:
+
+```Shell
+$ flask run --host localhost --port 5000
+```
+
+## Community Help and Support
+
+Use [Stack Overflow](http://stackoverflow.com/questions/tagged/msal) to get support from the community.
+Ask your questions on Stack Overflow first and browse existing issues to see if someone has asked your question before.
+Make sure that your questions or comments are tagged with [`azure-active-directory` `adal` `msal` `python`].
+
+If you find a bug in the sample, please raise the issue on [GitHub Issues](../../issues).
+
+To provide a recommendation, visit the following [User Voice page](https://feedback.azure.com/forums/169401-azure-active-directory).
 
 ## Contributing
 
-If you'd like to contribute to this sample, see [CONTRIBUTING.MD](./CONTRIBUTING.md).
+If you'd like to contribute to this sample, see [CONTRIBUTING.MD](/CONTRIBUTING.md).
 
-## Code of Conduct
+This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information, see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
 
-This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/).
-For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or
-contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
+## More information
+
+For more information, see MSAL.Python's [conceptual documentation]("https://github.com/AzureAD/microsoft-authentication-library-for-python/wiki"):
+
+For more information about web apps scenarios on the Microsoft identity platform see [Scenario: Web app that calls web APIs](https://docs.microsoft.com/en-us/azure/active-directory/develop/scenario-web-app-call-api-overview)
+
+For more information about how OAuth 2.0 protocols work in this scenario and other scenarios, see [Authentication Scenarios for Azure AD](http://go.microsoft.com/fwlink/?LinkId=394414).

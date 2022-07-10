@@ -2,12 +2,8 @@
 param(
     [PSCredential] $Credential,
     [Parameter(Mandatory=$False, HelpMessage='Tenant ID (This is a GUID which represents the "Directory ID" of the AzureAD tenant into which you want to create the apps')]
-    [string] $tenantId,
-    [Parameter(Mandatory=$False, HelpMessage='Azure environment to use while running the script (it defaults to AzureCloud)')]
-    [string] $azureEnvironmentName
+    [string] $tenantId
 )
-
-#Requires -Modules AzureAD
 
 <#
  This script creates the Azure AD applications needed for this sample and updates the configuration files
@@ -21,6 +17,35 @@ param(
  There are four ways to run this script. For more information, read the AppCreationScripts.md file in the same folder as this script.
 #>
 
+<<<<<<< HEAD
+=======
+# Create a password that can be used as an application key
+Function ComputePassword
+{
+    $aesManaged = New-Object "System.Security.Cryptography.AesManaged"
+    $aesManaged.Mode = [System.Security.Cryptography.CipherMode]::CBC
+    $aesManaged.Padding = [System.Security.Cryptography.PaddingMode]::Zeros
+    $aesManaged.BlockSize = 128
+    $aesManaged.KeySize = 256
+    $aesManaged.GenerateKey()
+    return [System.Convert]::ToBase64String($aesManaged.Key)
+}
+
+# Create an application key
+# See https://www.sabin.io/blog/adding-an-azure-active-directory-application-and-key-using-powershell/
+Function CreateAppKey([DateTime] $fromDate, [double] $durationInYears, [string]$pw)
+{
+    $endDate = $fromDate.AddYears($durationInYears) 
+    $keyId = (New-Guid).ToString();
+    $key = New-Object Microsoft.Open.AzureAD.Model.PasswordCredential
+    $key.StartDate = $fromDate
+    $key.EndDate = $endDate
+    $key.Value = $pw
+    $key.KeyId = $keyId
+    return $key
+}
+
+>>>>>>> 8c8bbef46e61f5674efb05666e5b2069afcc416c
 # Adds the requiredAccesses (expressed as a pipe separated string) to the requiredAccess structure
 # The exposed permissions are in the $exposedPermissions collection, and the type of permission (Scope | Role) is 
 # described in $permissionType
@@ -76,6 +101,7 @@ Function GetRequiredPermissions([string] $applicationDisplayName, [string] $requ
 }
 
 
+<<<<<<< HEAD
 Function UpdateLine([string] $line, [string] $value)
 {
     $index = $line.IndexOf('=')
@@ -112,6 +138,8 @@ Function UpdateTextFile([string] $configFilePath, [System.Collections.HashTable]
     Set-Content -Path $configFilePath -Value $lines -Force
 }
 
+=======
+>>>>>>> 8c8bbef46e61f5674efb05666e5b2069afcc416c
 Function ReplaceInLine([string] $line, [string] $key, [string] $value)
 {
     $index = $line.IndexOf($key)
@@ -156,11 +184,14 @@ Function ConfigureApplications
    so that they are consistent with the Applications parameters
 #> 
     $commonendpoint = "common"
+<<<<<<< HEAD
     
     if (!$azureEnvironmentName)
     {
         $azureEnvironmentName = "AzureCloud"
     }
+=======
+>>>>>>> 8c8bbef46e61f5674efb05666e5b2069afcc416c
 
     # $tenantId is the Active Directory Tenant. This is a GUID which represents the "Directory ID" of the AzureAD tenant
     # into which you want to create the apps. Look it up in the Azure portal in the "Properties" of the Azure AD.
@@ -169,17 +200,29 @@ Function ConfigureApplications
     # you'll need to sign-in with creds enabling your to create apps in the tenant)
     if (!$Credential -and $TenantId)
     {
+<<<<<<< HEAD
         $creds = Connect-AzureAD -TenantId $tenantId -AzureEnvironmentName $azureEnvironmentName
+=======
+        $creds = Connect-AzureAD -TenantId $tenantId
+>>>>>>> 8c8bbef46e61f5674efb05666e5b2069afcc416c
     }
     else
     {
         if (!$TenantId)
         {
+<<<<<<< HEAD
             $creds = Connect-AzureAD -Credential $Credential -AzureEnvironmentName $azureEnvironmentName
         }
         else
         {
             $creds = Connect-AzureAD -TenantId $tenantId -Credential $Credential -AzureEnvironmentName $azureEnvironmentName
+=======
+            $creds = Connect-AzureAD -Credential $Credential
+        }
+        else
+        {
+            $creds = Connect-AzureAD -TenantId $tenantId -Credential $Credential
+>>>>>>> 8c8bbef46e61f5674efb05666e5b2069afcc416c
         }
     }
 
@@ -188,14 +231,18 @@ Function ConfigureApplications
         $tenantId = $creds.Tenant.Id
     }
 
+<<<<<<< HEAD
     
 
+=======
+>>>>>>> 8c8bbef46e61f5674efb05666e5b2069afcc416c
     $tenant = Get-AzureADTenantDetail
     $tenantName =  ($tenant.VerifiedDomains | Where { $_._Default -eq $True }).Name
 
     # Get the user running the script to add the user as the app owner
     $user = Get-AzureADUser -ObjectId $creds.Account.Id
 
+<<<<<<< HEAD
    # Create the spa AAD application
    Write-Host "Creating the AAD application (active-directory-javascript-graphapi-v2)"
    # create the application 
@@ -233,10 +280,55 @@ Function ConfigureApplications
    Write-Host "Getting access from 'spa' to 'Microsoft Graph'"
    $requiredPermissions = GetRequiredPermissions -applicationDisplayName "Microsoft Graph" `
                                                 -requiredDelegatedPermissions "User.Read" `
+=======
+   # Create the pythonwebapp AAD application
+   Write-Host "Creating the AAD application (python-webapp)"
+   # Get a 2 years application key for the pythonwebapp Application
+   $pw = ComputePassword
+   $fromDate = [DateTime]::Now;
+   $key = CreateAppKey -fromDate $fromDate -durationInYears 2 -pw $pw
+   $pythonwebappAppKey = $pw
+   # create the application 
+   $pythonwebappAadApplication = New-AzureADApplication -DisplayName "python-webapp" `
+                                                        -ReplyUrls "http://localhost:5000/getAToken" `
+                                                        -IdentifierUris "https://$tenantName/python-webapp" `
+                                                        -AvailableToOtherTenants $True `
+                                                        -PasswordCredentials $key `
+                                                        -Oauth2AllowImplicitFlow $true `
+                                                        -PublicClient $False
+
+   # create the service principal of the newly created application 
+   $currentAppId = $pythonwebappAadApplication.AppId
+   $pythonwebappServicePrincipal = New-AzureADServicePrincipal -AppId $currentAppId -Tags {WindowsAzureActiveDirectoryIntegratedApp}
+
+   # add the user running the script as an app owner if needed
+   $owner = Get-AzureADApplicationOwner -ObjectId $pythonwebappAadApplication.ObjectId
+   if ($owner -eq $null)
+   { 
+        Add-AzureADApplicationOwner -ObjectId $pythonwebappAadApplication.ObjectId -RefObjectId $user.ObjectId
+        Write-Host "'$($user.UserPrincipalName)' added as an application owner to app '$($pythonwebappServicePrincipal.DisplayName)'"
+   }
+
+
+   Write-Host "Done creating the pythonwebapp application (python-webapp)"
+
+   # URL of the AAD application in the Azure portal
+   # Future? $pythonwebappPortalUrl = "https://portal.azure.com/#@"+$tenantName+"/blade/Microsoft_AAD_RegisteredApps/ApplicationMenuBlade/Overview/appId/"+$pythonwebappAadApplication.AppId+"/objectId/"+$pythonwebappAadApplication.ObjectId+"/isMSAApp/"
+   $pythonwebappPortalUrl = "https://portal.azure.com/#blade/Microsoft_AAD_RegisteredApps/ApplicationMenuBlade/CallAnAPI/appId/"+$pythonwebappAadApplication.AppId+"/objectId/"+$pythonwebappAadApplication.ObjectId+"/isMSAApp/"
+   Add-Content -Value "<tr><td>pythonwebapp</td><td>$currentAppId</td><td><a href='$pythonwebappPortalUrl'>python-webapp</a></td></tr>" -Path createdApps.html
+
+   $requiredResourcesAccess = New-Object System.Collections.Generic.List[Microsoft.Open.AzureAD.Model.RequiredResourceAccess]
+
+   # Add Required Resources Access (from 'pythonwebapp' to 'Microsoft Graph')
+   Write-Host "Getting access from 'pythonwebapp' to 'Microsoft Graph'"
+   $requiredPermissions = GetRequiredPermissions -applicationDisplayName "Microsoft Graph" `
+                                                -requiredDelegatedPermissions "User.ReadBasic.All" `
+>>>>>>> 8c8bbef46e61f5674efb05666e5b2069afcc416c
 
    $requiredResourcesAccess.Add($requiredPermissions)
 
 
+<<<<<<< HEAD
    Set-AzureADApplication -ObjectId $spaAadApplication.ObjectId -RequiredResourceAccess $requiredResourcesAccess
    Write-Host "Granted permissions."
 
@@ -251,6 +343,16 @@ Function ConfigureApplications
    Write-Host "Updating the sample code ($configFile)"
    $dictionary = @{ "graphMeEndpoint" = 'https://graph.microsoft.com/v1.0/me/';"graphMailEndpoint" = 'https://graph.microsoft.com/v1.0/me/messages/' };
    UpdateTextFile -configFilePath $configFile -dictionary $dictionary
+=======
+   Set-AzureADApplication -ObjectId $pythonwebappAadApplication.ObjectId -RequiredResourceAccess $requiredResourcesAccess
+   Write-Host "Granted permissions."
+
+   # Update config file for 'pythonwebapp'
+   $configFile = $pwd.Path + "\..\app_config.py"
+   Write-Host "Updating the sample code ($configFile)"
+   $dictionary = @{ "Enter_the_Tenant_Name_Here" = $tenantName;"Enter_the_Client_Secret_Here" = $pythonwebappAppKey;"Enter_the_Application_Id_here" = $pythonwebappAadApplication.AppId };
+   ReplaceInTextFile -configFilePath $configFile -dictionary $dictionary
+>>>>>>> 8c8bbef46e61f5674efb05666e5b2069afcc416c
   
    Add-Content -Value "</tbody></table></body></html>" -Path createdApps.html  
 }

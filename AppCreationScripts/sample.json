@@ -1,64 +1,60 @@
 {
-    "Sample": {
-      "Title": "A simple JavaScript single-page application calling Microsoft Graph API using msal.js (w/ AAD v2 endpoint)",
-      "Level": 100,
-      "Client": "SinglePageApplication",
-      "Service": "Microsoft Graph",
-      "RepositoryUrl": "active-directory-javascript-graphapi-v2",
-      "Endpoint": "AAD v2.0"
-    },
+  "Sample": {
+    "RepositoryUrl": "https://github.com/Azure-Samples/ms-identity-python-webapp",
+    "Title": "Integrating Microsoft Identity Platform with a Python web application",
+    "Level": 300,
+    "Client": "Python Web Application",
+    "Service": "Microsoft Graph",
+    "Endpoint": "Microsoft identity platform (formerly Azure AD v2.0)"
+  },
 
-    "AADApps": [
-      {
-        "Id": "spa",
-        "Name": "active-directory-javascript-graphapi-v2",
-        "Kind" :  "SinglePageApplication",
-        "HomePage": "http://localhost:3000/",
-        "ReplyUrls":"http://localhost:3000/",
-        "AllowImplicitFlow": true,
-        "RequiredResourcesAccess": [
-          {
-            "Resource": "Microsoft Graph",
-            "DelegatedPermissions": [ "User.Read" ]
-          }
-        ]
-      }
-    ],
-  
-    "CodeConfiguration": [
-      {
-        "App": "spa",
-        "SettingKind": "Replace",
-        "SettingFile": "\\..\\JavaScriptSPA\\authConfig.js",
-        "Mappings": [
-          {
-            "key": "Enter_the_Application_Id_Here",
-            "value": ".AppId"
-          },
-          {
-            "key": "Enter_the_Cloud_Instance_Id_HereEnter_the_Tenant_Info_Here",
-            "value": "\"https://login.microsoftonline.com/\"+$tenantName"
-          },
-          {
-            "key": "Enter_the_Redirect_Uri_Here",
-            "value": ".HomePage"
-          }
-        ]
-      },
-      {
-        "App": "spa",
-        "SettingKind": "Text",
-        "SettingFile": "\\..\\JavaScriptSPA\\graphConfig.js",
-        "Mappings": [
-          {
-            "key": "graphMeEndpoint",
-            "value": "'https://graph.microsoft.com/v1.0/me/'"
-          },
-          {
-            "key": "graphMailEndpoint",
-            "value": "'https://graph.microsoft.com/v1.0/me/messages/'"
-          }
-        ]
-      }
-    ]
-  }
+  /*
+    This section describes the Azure AD Applications to configure, and their dependencies
+  */
+  "AADApps": [
+    {
+      "Id": "pythonwebapp",
+      "Name": "python-webapp",
+      "Kind": "WebApp", /* SinglePageApplication, WebApp, Mobile, UWP, Desktop, Daemon, WebApi, Browserless */
+      "Audience": "AzureADandPersonalMicrosoftAccount", /* AzureADMyOrg, AzureADMultipleOrgs, AzureADandPersonalMicrosoftAccount, PersonalMicrosoftAccount */
+      "PasswordCredentials": "Auto",
+      "RequiredResourcesAccess": [
+        {
+          "Resource": "Microsoft Graph",
+          "DelegatedPermissions": [
+            "User.ReadBasic.All"
+          ]
+        }
+      ],
+      "ReplyUrls": "http://localhost:5000/getAToken"
+    }
+  ],
+
+  /*
+    This section describes how to update the code in configuration files from the apps coordinates, once the apps
+    are created in Azure AD.
+    Each section describes a configuration file, for one of the apps, it's type (XML, JSon, plain text), its location
+    with respect to the root of the sample, and the mappping (which string in the config file is mapped to which value
+  */
+  "CodeConfiguration": [
+    {
+      "App": "pythonwebapp",
+      "SettingKind": "Replace",
+      "SettingFile": "\\..\\app_config.py",
+      "Mappings": [
+        {
+          "key": "Enter_the_Tenant_Name_Here",
+          "value": "$tenantName"
+        },
+        {
+          "key": "Enter_the_Client_Secret_Here",
+          "value": ".AppKey"
+        },
+        {
+          "key": "Enter_the_Application_Id_here",
+          "value": ".AppId"
+        }
+      ]
+    }
+  ]
+}
