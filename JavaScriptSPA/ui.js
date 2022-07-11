@@ -18,7 +18,15 @@ function showWelcomeMessage(account) {
 }
 
 function writeSubscriptionToUI(subscriptions) {
-  subscriptionUI.innerHTML = '<p>' + subscriptions + '</p>';
+  console.log(subscriptions);
+  htmlString = '<select name="subscription" id="subscription">';
+  if(subscriptions.value) {
+    subscriptions.value.forEach(sub => {
+      htmlString += '<option value="'+sub.primaryKey+'">'+sub.id+'</option>'
+    });
+  }
+  htmlString += '</select>';
+  subscriptionUI.innerHTML = htmlString;
 }
 
 function updateUI(data, endpoint) {
