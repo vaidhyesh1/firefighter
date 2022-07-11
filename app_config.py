@@ -13,7 +13,7 @@ resetpassword_user_flow = "B2C_1_passwordreset1"  # Note: Legacy setting.
 authority_template = "https://{tenant}.b2clogin.com/{tenant}.onmicrosoft.com/{user_flow}"
 
 # Application (client) ID of app registration
-CLIENT_ID = "aee84d77-9b5d-43ee-ba31-937d044dd166"
+CLIENT_ID = "7e62d83e-c372-4553-be8f-512890332ba3"
 
 # Placeholder - for use ONLY during testing.
 CLIENT_SECRET = "82f6273a-0fe8-4eec-b3f6-c9aa22fad1ca"
@@ -49,6 +49,3 @@ SCOPE = []  # Example with two exposed scopes: ["demo.read", "demo.write"]
 
 # Specifies the token cache should be stored in server-side session
 SESSION_TYPE = "filesystem"
-
-DEBUG = True
-ENV = 'development'

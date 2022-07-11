@@ -69,15 +69,3 @@ function getTokenRedirect(request, endpoint) {
           return myMSALObj.acquireTokenRedirect(request);
       });
 }
-
-function seeProfile() {
-  getTokenRedirect(loginRequest, graphConfig.graphMeEndpoint);
-}
-  
-function readMail() {
-  if (accessToken) {
-    callMSGraph(graphConfig.graphMailEndpoint, accessToken, updateUI);
-  } else {
-    getTokenRedirect(tokenRequest, graphConfig.graphMailEndpoint);
-  }
-}

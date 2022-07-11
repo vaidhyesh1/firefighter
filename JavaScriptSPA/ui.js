@@ -6,7 +6,7 @@ const cardDiv = document.getElementById("card-div");
 const mailButton = document.getElementById("readMail");
 const profileButton = document.getElementById("seeProfile");
 const profileDiv = document.getElementById("profile-div");
-
+const subscriptionUI = document.getElementById("list-subscriptions");
 
 function showWelcomeMessage(account) {
 
@@ -15,6 +15,10 @@ function showWelcomeMessage(account) {
     welcomeDiv.innerHTML = `Welcome ${account.name}`;
     signInButton.classList.add('d-none');
     signOutButton.classList.remove('d-none');
+}
+
+function writeSubscriptionToUI(subscriptions) {
+  subscriptionUI.innerHTML = '<p>' + subscriptions + '</p>';
 }
 
 function updateUI(data, endpoint) {
