@@ -10,6 +10,7 @@ function signIn() {
       console.log(loginResponse.idToken.rawIdToken);
       if (myMSALObj.getAccount()) {
         showWelcomeMessage(myMSALObj.getAccount());
+        authPopUpSilent(writeSubscriptionToUI);
       }
     }).catch(error => {
       console.log(error);
