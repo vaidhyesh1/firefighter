@@ -28,7 +28,7 @@ function writeSubscriptionToUI(subscriptions) {
     });
   }
   htmlString += '</select>';
-  subscriptionUI.innerHTML += htmlString;
+  subscriptionUI.innerHTML = htmlString;
   document.getElementById("getresources").classList.remove('d-none');
 }
 
@@ -40,7 +40,7 @@ function writeResourceGroupToUI(resources) {
     });
   }
   htmlString += '</select>';
-  resourceGroupUI.innerHTML += htmlString;
+  resourceGroupUI.innerHTML = htmlString;
   document.getElementById("getautoscalinggroups").classList.remove('d-none');
 }
 
@@ -52,7 +52,7 @@ function writeAutoscalingGroupToUI(autoScaleSetting) {
     });
   }
   htmlString += '</select>';
-  autoScalingGroupUI.innerHTML += htmlString;
+  autoScalingGroupUI.innerHTML = htmlString;
   document.getElementById("getScaleSettings").classList.remove('d-none');
 
 }
@@ -75,7 +75,7 @@ function writeAutoScaleToUI(singleAutoScaleSetting) {
     });
   }
   htmlString += '</select>';
-  getProfileUI.innerHTML += htmlString;
+  getProfileUI.innerHTML = htmlString;
 }
 
 function updateAutoScaleSettingToUI(message) {
