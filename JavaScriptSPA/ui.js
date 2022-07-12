@@ -8,7 +8,9 @@ const profileButton = document.getElementById("seeProfile");
 const profileDiv = document.getElementById("profile-div");
 const subscriptionUI = document.getElementById("list-subscriptions");
 const resourceGroupUI = document.getElementById("get-resources");
-
+const autoScalingGroupUI = document.getElementById("list-autoscaling-groups");
+const autoScalingSettingUI = document.getElementById("list-autoscaling-setting");
+const getProfileUI = document.getElementById("get-profiles");
 function showWelcomeMessage(account) {
 
     // Reconfiguring DOM elements
@@ -26,7 +28,8 @@ function writeSubscriptionToUI(subscriptions) {
     });
   }
   htmlString += '</select>';
-  subscriptionUI.innerHTML = htmlString;
+  subscriptionUI.innerHTML += htmlString;
+  document.getElementById("getresources").classList.remove('d-none');
 }
 
 function writeResourceGroupToUI(resources) {
@@ -37,8 +40,47 @@ function writeResourceGroupToUI(resources) {
     });
   }
   htmlString += '</select>';
-  resourceGroupUI.innerHTML = htmlString;
+  resourceGroupUI.innerHTML += htmlString;
+  document.getElementById("getautoscalinggroups").classList.remove('d-none');
 }
+
+function writeAutoscalingGroupToUI(autoScaleSetting) {
+  htmlString = '<select name="autoscaling" id="autoscaling">';
+  if(autoScaleSetting.value) {
+    autoScaleSetting.value.forEach(setting => {
+      htmlString += '<option value="'+setting.name+'">'+setting.name+'</option>'
+    });
+  }
+  htmlString += '</select>';
+  autoScalingGroupUI.innerHTML += htmlString;
+  document.getElementById("getScaleSettings").classList.remove('d-none');
+
+}
+
+function writeAutoScaleToUI(singleAutoScaleSetting) {
+  console.log(singleAutoScaleSetting);
+  document.getElementById("autoScaleSetting").classList.remove('d-none');
+  console.log(singleAutoScaleSetting.properties.enabled);
+  if(singleAutoScaleSetting.properties.enabled) {
+    document.getElementById("autoenabled").checked= true;
+  }
+  document.getElementById("location").value = singleAutoScaleSetting.location;
+  document.getElementById("scaleName").value = singleAutoScaleSetting.properties.name;
+
+  htmlString = '<select name="profile" id="profile">';
+  if(singleAutoScaleSetting.properties.profiles) {
+    profiles = singleAutoScaleSetting.properties.profiles;
+    profiles.forEach(profile => {
+      htmlString += `<option value="${profile.capacity.minimum} ${profile.capacity.maximum} ${profile.capacity.default}">${profile.name}</option>`
+    });
+  }
+  htmlString += '</select>';
+  getProfileUI.innerHTML += htmlString;
+}
+
+function updateAutoScaleSettingToUI(message) {
+  alert(`Autoscale setting ${message.properties.name} successfully updated!`);
+  }
 
 function updateUI(data, endpoint) {
   console.log('Graph API responded at: ' + new Date().toString());

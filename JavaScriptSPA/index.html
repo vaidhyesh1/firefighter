@@ -29,16 +29,35 @@
     <h5 class="card-header text-center">Manage Autoscaling on Azure API Management Services</h5>
     <br>
     <div class="row" style="margin:auto" >
-    <div id="card-div" class="col-md-3 d-none">
+    <div id="card-div" class="col-md-3 d-none" style="justify-content: center;">
     <div class="card text-center">
-      <div class="card-body">
+      <div class="card-body" >
         <h5 class="card-title" id="welcomeMessage">Please sign-in to link your Azure account</h5>
         <div id="profile-div"></div>
+        <br>
         <div id="list-subscriptions"></div>
-        <button type="button" id="getresources" class="btn btn-success" onclick="authPopUpSilent(writeResourceGroupToUI,getResourceGroups)">Get Resource Groups</button>
+        <br>
+        <button type="button" id="getresources" class="btn btn-success d-none" onclick="authPopUpSilent(writeResourceGroupToUI,getResourceGroups)">Get Resource Groups</button>
+        <br>
         <div id="get-resources"></div>
-        <!-- <button type="button" id="getresources" class="btn btn-success" onclick="authPopUpSilent(writeSubscriptionToUI)">List Azure Subscriptions</button> -->
-
+        <br>
+        <button type="button" id="getautoscalinggroups" class="btn btn-success d-none" onclick="authPopUpSilent(writeAutoscalingGroupToUI,getAutoScalingGroups)">Get Autoscaling Groups</button>
+        <br>
+        <div id="list-autoscaling-groups"></div>
+        <br>
+        <button type="button" id="getScaleSettings" class="btn btn-success d-none" onclick="authPopUpSilent(writeAutoScaleToUI,getAutoScalingSetting)">Get Available Autoscale Settings</button>
+        <br>
+        <div id="autoScaleSetting" class="d-none">
+          <br><label for="location">Autoscale Setting Location</label>
+          <input type="text" id="location" name="location">
+          <br><label for="scaleName">Autoscale Setting Name</label>
+          <input type="text" id="scaleName" name="scaleName"><br>
+          <input type="checkbox" id="autoenabled" name="autoenabled" value="autoscaleenabled">
+          <label for="enabled">Enable Autoscaling</label><br>
+          <div id="get-profiles"></div>
+          <button type="button" id="updateScaleSettings" class="btn btn-success" onclick="authPopUpSilent(updateAutoScaleSettingToUI,updateAutoScaleSetting)">Update Autoscale Settings</button><br>
+        </div>
+        <br/>
       </div>
     </div>
     </div>
