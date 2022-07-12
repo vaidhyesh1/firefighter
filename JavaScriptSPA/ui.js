@@ -21,7 +21,7 @@ function showWelcomeMessage(account) {
 }
 
 function writeSubscriptionToUI(subscriptions) {
-  htmlString = '<select name="subscription" id="subscription">';
+  htmlString = '<br> <select name="subscription" id="subscription">';
   if(subscriptions.value) {
     subscriptions.value.forEach(sub => {
       htmlString += '<option value="'+sub.subscriptionId+'">'+sub.displayName+'</option>'
@@ -33,7 +33,7 @@ function writeSubscriptionToUI(subscriptions) {
 }
 
 function writeResourceGroupToUI(resources) {
-  htmlString = '<select name="resources" id="resources">';
+  htmlString = '<br> <select name="resources" id="resources">';
   if(resources.value) {
     resources.value.forEach(resource => {
       htmlString += '<option value="'+resource.name+'">'+resource.name+'</option>'
@@ -45,7 +45,7 @@ function writeResourceGroupToUI(resources) {
 }
 
 function writeAutoscalingGroupToUI(autoScaleSetting) {
-  htmlString = '<select name="autoscaling" id="autoscaling">';
+  htmlString = '<br> <select name="autoscaling" id="autoscaling">';
   if(autoScaleSetting.value) {
     autoScaleSetting.value.forEach(setting => {
       htmlString += '<option value="'+setting.name+'">'+setting.name+'</option>'

@@ -27,14 +27,19 @@
     </nav>
     <br>
     <h5 class="card-header text-center">Manage Autoscaling on Azure API Management Services</h5>
-    <br>
-    <div class="row" style="margin:auto" >
-    <div id="card-div" class="col-md-3 d-none" style="justify-content: center;">
+    <!-- <br>
+    <div class="col-md-3">
+      <div class="list-group" id="list-tab" role="tablist">
+      </div>
+    </div> -->
+    <!-- <div class="row" style="margin:auto" > -->
+  <div class="d-flex justify-content-center">
+    <div id="card-div" class="col-md-4 d-none" >
     <div class="card text-center">
       <div class="card-body" >
         <h5 class="card-title" id="welcomeMessage">Please sign-in to link your Azure account</h5>
         <div id="profile-div"></div>
-        <br>
+        <!-- <br> -->
         <div id="list-subscriptions"></div>
         <br>
         <button type="button" id="getresources" class="btn btn-success d-none" onclick="authPopUpSilent(writeResourceGroupToUI,getResourceGroups)">Get Resource Groups</button>
@@ -55,25 +60,23 @@
           <input type="checkbox" id="autoenabled" name="autoenabled" value="autoscaleenabled">
           <label for="enabled">Enable Autoscaling</label><br>
           <div id="get-profiles"></div>
+          <br>
           <button type="button" id="updateScaleSettings" class="btn btn-success" onclick="authPopUpSilent(updateAutoScaleSettingToUI,updateAutoScaleSetting)">Update Autoscale Settings</button><br>
         </div>
         <br/>
       </div>
     </div>
-    </div>
+  </div>
+    <!-- </div> -->
+    <!-- <br>
     <br>
-    <br>
-      <div class="col-md-4">
-        <div class="list-group" id="list-tab" role="tablist">
-        </div>
-      </div>
       <div class="col-md-5">
         <div class="tab-content" id="nav-tabContent">
         </div>
       </div>
     </div>
     <br>
-    <br>
+    <br> -->
 
     <!-- importing bootstrap.js and supporting js libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
