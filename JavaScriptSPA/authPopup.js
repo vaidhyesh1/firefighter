@@ -10,7 +10,7 @@ function signIn() {
       console.log(loginResponse.idToken.rawIdToken);
       if (myMSALObj.getAccount()) {
         showWelcomeMessage(myMSALObj.getAccount());
-        authPopUpSilent(writeSubscriptionToUI);
+        authPopUpSilent(writeSubscriptionToUI, listSubscriptions );
       }
     }).catch(error => {
       console.log(error);
@@ -60,7 +60,27 @@ function readMail() {
       });
   }
 }
+function getResourceGroups(callback,token) {
+  const headers = new Headers();
+  var e = document.getElementById("subscription");
+  var subscriptionId = e.options[e.selectedIndex].value;
+  console.log(`Subscription ID: ${subscriptionId}`)
+  const endpoint = `https://management.azure.com/subscriptions/${subscriptionId}/resourcegroups?api-version=2021-04-01`;
+  const bearer = `Bearer ${token}`;
 
+  headers.append("Authorization", bearer);
+
+  const options = {
+      method: "GET",
+      headers: headers
+  };
+
+  console.log('request made to Graph API at: ' + new Date().toString());
+  fetch(endpoint, options)
+    .then(response => response.json())
+    .then(response => callback(response))
+    .catch(error => console.log(error))
+}
 
 function listSubscriptions(callback,token) {
   const headers = new Headers();
@@ -81,12 +101,12 @@ function listSubscriptions(callback,token) {
     .catch(error => console.log(error))
 }
 
-function authPopUpSilent(callback){
+function authPopUpSilent(callback,calledMethod){
 if (myMSALObj.getAccount()) {
   getTokenPopup(tokenRequest)
   .then(response => {
     console.log(response);
-    listSubscriptions(callback,response.accessToken);
+    calledMethod(callback,response.accessToken);
   }).catch(error => {
     console.log(error);
   });

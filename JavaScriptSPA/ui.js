@@ -7,6 +7,7 @@ const mailButton = document.getElementById("readMail");
 const profileButton = document.getElementById("seeProfile");
 const profileDiv = document.getElementById("profile-div");
 const subscriptionUI = document.getElementById("list-subscriptions");
+const resourceGroupUI = document.getElementById("get-resources");
 
 function showWelcomeMessage(account) {
 
@@ -18,7 +19,6 @@ function showWelcomeMessage(account) {
 }
 
 function writeSubscriptionToUI(subscriptions) {
-  console.log(subscriptions);
   htmlString = '<select name="subscription" id="subscription">';
   if(subscriptions.value) {
     subscriptions.value.forEach(sub => {
@@ -27,6 +27,17 @@ function writeSubscriptionToUI(subscriptions) {
   }
   htmlString += '</select>';
   subscriptionUI.innerHTML = htmlString;
+}
+
+function writeResourceGroupToUI(resources) {
+  htmlString = '<select name="resources" id="resources">';
+  if(resources.value) {
+    resources.value.forEach(resource => {
+      htmlString += '<option value="'+resource.name+'">'+resource.name+'</option>'
+    });
+  }
+  htmlString += '</select>';
+  resourceGroupUI.innerHTML = htmlString;
 }
 
 function updateUI(data, endpoint) {
