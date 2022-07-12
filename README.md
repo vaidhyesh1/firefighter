@@ -32,7 +32,7 @@ CICD deployment - Full CI-CD deployment with github actions was linked to the Az
 
 ### Request flow to manage API Management system
 
-
+![alt text](https://github.com//vaidhyesh1/firefighter/master/image2.png?raw=true)
 
 ## Azure tools used
 
@@ -45,6 +45,7 @@ CICD deployment - Full CI-CD deployment with github actions was linked to the Az
 
 ## Azure Reference Architecture outlining a high-level overview of the tools and devices used within the application
 
+![alt text](https://github.com//vaidhyesh1/firefighter/master/image1.png?raw=true)
 
 ## Project Links
 
