@@ -14,7 +14,7 @@ const app = express();
 const port = 8080; // process.env.PORT || 3000;
 
 // Configure morgan module to log all requests.
-app.use(morgan('dev'));
+app.use(morgan('prod'));
 
 // Set the front-end folder to serve public assets.
 app.use(express.static('JavaScriptSPA'))
