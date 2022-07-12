@@ -53,7 +53,7 @@ Project URL - https://mftinnovation.azurewebsites.net/
 
 GitHub repository URL - https://github.com/vaidhyesh1/firefighter/tree/master
 
-Video link of the Project demo - Firefighter - Microsoft Azure Innovation Challenge
+Video link of the Project demo - https://youtu.be/x5Dd09N2ksk
 
 
 
