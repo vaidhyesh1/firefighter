@@ -3,18 +3,22 @@
 ## Firefighter
 ### An open source web application that can help DevOps Engineers manage their Azure API Management Services
 
-## Challenge Statement
-
-### Microsoft Azure Innovation Challenge #1: Deploy and Manage APIs, operations, policies and other artifacts at scale in Azure API Management
-
-APIs and microservices are designed to support the development of integrated digital experience. However, when introducing a large number of APIs, operations, policies, and other artifacts the impact on DevOps engineers is often forgotten.
-How can solutions with large numbers of APIs exposed in the back end avoid failure? How can DevOps successfully deploy and manage APIs at scale across environments (Dev -> QA -> Production)?
-Tackle this challenge and build an open source project that uses Azure services and workloads to address API Management with Azure at scale.
-
 ## Project description 
 
 Firefighter is an open source web application that can help businesses manage their Azure API Management. It can help DevOps Engineers to automatically scale their API Management gateway instance. Firefighter authenticates the user using the Microsoft Azure credentials and lets them choose their autoscaling group settings to choose the API Management service. The users can enable or disable the auto scaling groups for the chosen API Management service. The users can also change the name and location of the auto scaling. 
- 
+
+## Setup
+
+STEP 1: Clone the repository from the given URL 
+
+GitHub repository URL - https://github.com/vaidhyesh1/firefighter/tree/master
+
+STEP 2: Run the following commands 
+```
+npm install
+npm start
+```
+
 ## Features & Functionality
 
 Firefighter UI: Firefighter is a single page web application hosted with HTML, CSS and VanillaJS as the frontend and NodeJS as the backend due to its extensive asynchronous support and low API response latency. The microservice is deployed using the Azure App Service.
@@ -27,6 +31,8 @@ CICD deployment - Full CI-CD deployment with github actions was linked to the Az
 
 
 ### Request flow to manage API Management system
+
+
 
 ## Azure tools used
 
@@ -47,16 +53,6 @@ Project URL - https://mftinnovation.azurewebsites.net/
 GitHub repository URL - https://github.com/vaidhyesh1/firefighter/tree/master
 
 Video link of the Project demo - 
-
-## System Requirements & Installation
-
-STEP 1: Clone the repository from the given URL 
-
-GitHub repository URL - https://github.com/vaidhyesh1/firefighter/tree/master
-
-STEP 2: Run the following commands 
-npm install
-npm start
 
 
 
