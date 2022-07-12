@@ -1,5 +1,3 @@
-!([https://drive.google.com/file/d/1uxXZUTc6WVcfyTwX9TuZ9MPp37TSZD5_/view?usp=sharing])
-
 # Microsoft Azure Innovation Challenge
 
 ## Firefighter
