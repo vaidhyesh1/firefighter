@@ -5,7 +5,6 @@
 const msalConfig = {
   auth: {
     clientId: "aee84d77-9b5d-43ee-ba31-937d044dd166",
-    responseType: 'code',
     authority: "https://login.microsoftonline.com/50d22c13-76f8-4065-91f2-2673fde03e55",
     redirectUri: "http://localhost:3000/",
   },
@@ -23,5 +22,5 @@ const loginRequest = {
 
 // Add here scopes for access token to be used at MS Graph API endpoints.
 const tokenRequest = {
-  scopes: ["Mail.Read"]
+  scopes: ['https://management.azure.com/.default']
 };

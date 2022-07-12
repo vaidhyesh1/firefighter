@@ -64,7 +64,7 @@ function readMail() {
 function listSubscriptions(callback,token) {
   const headers = new Headers();
   const endpoint = 'https://management.azure.com/subscriptions?api-version=2020-01-01';
-  const bearer = 'Bearer '+token;
+  const bearer = `Bearer ${token}`;
 
   headers.append("Authorization", bearer);
 

@@ -22,7 +22,7 @@ function writeSubscriptionToUI(subscriptions) {
   htmlString = '<select name="subscription" id="subscription">';
   if(subscriptions.value) {
     subscriptions.value.forEach(sub => {
-      htmlString += '<option value="'+sub.primaryKey+'">'+sub.id+'</option>'
+      htmlString += '<option value="'+sub.subscriptionId+'">'+sub.displayName+'</option>'
     });
   }
   htmlString += '</select>';
