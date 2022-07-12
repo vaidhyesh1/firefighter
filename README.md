@@ -64,11 +64,11 @@ npm start
 
 ## References
 
-https://docs.microsoft.com/en-us/azure/active-directory/develop/tutorial-v2-javascript-spa
-https://docs.microsoft.com/en-us/rest/api/resources/subscriptions/list
-https://docs.microsoft.com/en-us/rest/api/resources/resource-groups/list
-https://docs.microsoft.com/en-us/rest/api/monitor/autoscale-settings/list-by-resource-group
-https://docs.microsoft.com/en-us/rest/api/monitor/autoscale-settings/create-or-update#code-try-0
+- https://docs.microsoft.com/en-us/azure/active-directory/develop/tutorial-v2-javascript-spa
+- https://docs.microsoft.com/en-us/rest/api/resources/subscriptions/list
+- https://docs.microsoft.com/en-us/rest/api/resources/resource-groups/list
+- https://docs.microsoft.com/en-us/rest/api/monitor/autoscale-settings/list-by-resource-group
+- https://docs.microsoft.com/en-us/rest/api/monitor/autoscale-settings/create-or-update#code-try-0
 
 
 
